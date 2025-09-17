@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopBuddy - Smart Shopping Assistant</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a202c;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .video-container {
+      position: relative;
+      flex: 1;
+      background: linear-gradient(135deg, #1a202c, #2d3748);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .video-overlay h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .video-overlay p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      color: #e2e8f0;
+      margin-bottom: 15px;
+    }
+
+    .play-button {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .play-button:hover {
+      transform: scale(1.05);
+    }
+
+    .play-button svg {
+      width: 40px;
+      height: 40px;
+      fill: white;
+    }
+
+    .chat-widget {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      width: 320px;
+      height: 500px;
+      background-color: #1a202c;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chat-header {
+      padding: 15px;
+      background-color: #1a202c;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .chat-header .icon {
+      color: #3b82f6;
+    }
+
+    .chat-body {
+      height: calc(100% - 100px);
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #1a202c;
+    }
+
+    .chat-input {
+      padding: 10px;
+      border-top: 1px solid #2d3748;
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2d3748;
+      color: white;
+      outline: none;
+    }
+
+    .chat-input button {
+      width: 40px;
+      height: 40px;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .footer {
+      padding: 10px;
+      text-align: center;
+      background-color: #1a202c;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      border-top: 1px solid #2d3748;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background-color: #2d3748;
+      margin: 0;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #3b82f6;
+      transition: width 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+  <!-- Video Container -->
+  <div class="video-container">
+    <div class="video-overlay">
+      <h1>Welcome to ShopBuddy</h1>
+      <p>Your Smart Shopping Companion – Ask about prices, offers, reviews & more!</p>
+      <div class="play-button" id="playButton">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+      <img src="https://via.placeholder.com/30x30?text=AI" alt="ShopBuddy Assistant" style="width: 30px; margin-top: 10px;">
+      <span style="color: #e2e8f0; font-size: 0.9rem;">ShopBuddy Assistant</span>
+    </div>
+  </div>
+
+  <!-- Chat Widget -->
+  <div class="chat-widget">
+    <div class="chat-header">
+      <div class="icon">🛒</div>
+      <div>QuickCart Help</div>
+      <div>Ask your queries</div>
+      <button style="background: red; color: white; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer;">×</button>
+    </div>
+    <div class="chat-body">
+      <!-- Messages will go here -->
+    </div>
+    <div class="chat-input">
+      <input type="text" placeholder="Type message ..." />
+      <button>📤</button>
+    </div>
+  </div>
+
+  <!-- Progress Bar (Video) -->
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    © 2025 Customer Support System
+  </div>
+
+  <script>
+    // Simulate video playback
+    const playButton = document.getElementById('playButton');
+    const progressFill = document.getElementById('progressFill');
+
+    let isPlaying = false;
+
+    playButton.addEventListener('click', () => {
+      if (!isPlaying) {
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19h12v-14H6v14zm8-12v8H8v-8h6z"/></svg>';
+        isPlaying = true;
+        simulateProgress();
+      } else {
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+        isPlaying = false;
+      }
+    });
+
+    function simulateProgress() {
+      let width = 0;
+      const interval = setInterval(() => {
+        width += 0.1;
+        progressFill.style.width = width + '%';
+        if (width >= 100) {
+          clearInterval(interval);
+          playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+          isPlaying = false;
+        }
+      }, 100);
+    }
+  </script>
+</body>
+</html>
