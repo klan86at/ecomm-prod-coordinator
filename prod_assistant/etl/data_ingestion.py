@@ -15,7 +15,7 @@ class DataIngestion:
         """
         print("Initializing DataIngestion pipeline...")
         self.model_loader = ModelLoader()
-        self._load_env_variables()
+        self.load_env_variables()
         self.csv_path = self._get_csv_path()
         self.product_data = self._load_csv()
         self.config = load_config()
@@ -52,9 +52,10 @@ class DataIngestion:
         """Load the CSV file into a pandas DataFrame
         """
         df = pd.read_csv(self.csv_path)
-        expected_columns = ["product_id", "product_title", "rating",  "review_text", "top_reviews", "price", "top_revies"]
+        
+        expected_columns = ["product_id", "product_title", "rating", "total_reviews", "price", "top_reviews"]
 
-        if not expected_columns.issubset(set(df.columns)):
+        if not set(expected_columns).issubset(set(df.columns)):
             raise ValueError(f"CSV file does not contain the expected columns: {expected_columns}")
         
         return df
@@ -69,7 +70,7 @@ class DataIngestion:
                 "product_id": row["product_id"],
                 "product_title": row["product_title"],
                 "rating": row["rating"],
-                "total_reviews": row["review_text"],
+                "total_reviews": row["total_reviews"],
                 "price": row["price"],
                 "top_reviews": row["top_reviews"]
             }
@@ -101,7 +102,7 @@ class DataIngestion:
             collection_name=collection_name,
             api_endpoint=self.db_api_endpoint,
             token=self.db_application_token,
-            namesspace=self.db_keyspace,
+            namespace=self.db_keyspace,
         )
 
         inserted_ids = vector_store.add_documents(documents)

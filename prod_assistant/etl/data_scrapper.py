@@ -28,7 +28,7 @@ class FlipkartScrapper:
         options.add_argument('--disable-blink-features=AutomationControlled')
         driver = uc.Chrome(options=options, use_subprocess=True)
 
-        if not product_url.startwith("http"):
+        if not product_url.startswith("http"):
             driver.quit()
             return "No reviews found"
         
@@ -114,7 +114,7 @@ class FlipkartScrapper:
             data (_type_): _description_
             filename (str, optional): _description_. Defaults to "product_reviews.csv".
         """
-        if os.path.islabs(filename):
+        if os.path.isabs(filename):
             path = filename
         elif os.path.dirname(filename):
             path = filename
