@@ -3,6 +3,7 @@ import streamlit as st
 from prod_assistant.etl.data_scrapper import FlipkartScrapper
 from prod_assistant.etl.data_ingestion import DataIngestion
 import os
+import undetected_chromedriver as uc
 
 flipkart_scraper = FlipkartScrapper()
 output_path = "data/product_reviews.csv"

@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "ecomm-prod-coordinator"
 version = "0.1.0"
@@ -5,3 +9,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []
+
+# Optional: authors, license
+authors = [{name = "Kennedy Langat" }]
+license = { text = "Proprietary" }
+
+# Optional: CLI command (python -m pip install -e .)
+[project.scripts]
+ecomm-assistant = "ecomm_prod_assistant.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["prod_assistant"]
+include = ["ecomm-prod-coordinator"]

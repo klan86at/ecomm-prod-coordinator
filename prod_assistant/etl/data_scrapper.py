@@ -124,6 +124,6 @@ class FlipkartScrapper:
 
         with open(path, "w", newline="", encoding="utf-8") as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(["Product ID", "Title", "Rating", "Total Reviews", "Price", "Top Reviews"])
+            writer.writerow(["product_id", "product_title", "rating", "total_reviews", "price", "top_reviews"])
             writer.writerows(data)
 

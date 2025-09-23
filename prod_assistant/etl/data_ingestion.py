@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from typing import List
 from langchain_core.documents import Document
 from langchain_astradb import AstraDBVectorStore
-from prod_assistant.utils.model_loader import ModelLoader
-from prod_assistant.utils.config_loader import load_config
+from utils.model_loader import ModelLoader
+from utils.config_loader import load_config
 
 class DataIngestion:
     """Class to handle data transformation and ingestion into AstraDB vector store
@@ -53,11 +53,11 @@ class DataIngestion:
         """
         df = pd.read_csv(self.csv_path)
         
-        expected_columns = ["product_id", "product_title", "rating", "total_reviews", "price", "top_reviews"]
+        expected_columns = {'product_id','product_title', 'rating', 'total_reviews','price', 'top_reviews'}
 
-        if not set(expected_columns).issubset(set(df.columns)):
-            raise ValueError(f"CSV file does not contain the expected columns: {expected_columns}")
-        
+        if not expected_columns.issubset(set(df.columns)):
+            raise ValueError(f"CSV must contain columns: {expected_columns}")
+    
         return df
     
     def transform_data(self):
@@ -124,8 +124,8 @@ class DataIngestion:
             print(f"Content: {res.page_content}\nMetadata: {res.metadata}\n")
 
         
-        # Run if this file is executed directly
-        if __name__ == "__main__":
-            ingestion = DataIngestion()
-            ingestion.run_pipeline()
+# Run if this file is executed directly
+if __name__ == "__main__":
+    ingestion = DataIngestion()
+    ingestion.run_pipeline()       
             
