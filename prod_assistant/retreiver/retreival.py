@@ -67,7 +67,7 @@ class Retreiver:
 
 if __name__ == "__main__":
     retreiver_obj = Retreiver()
-    user_query = "Can you suggest good budget laptops?"
+    user_query = "Can you suggest good budget phone?"
     results = retreiver_obj.call_retreiver(user_query)
 
     for idx, doc in enumerate(results, 1):
