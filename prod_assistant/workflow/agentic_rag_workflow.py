@@ -63,7 +63,7 @@ class AgenticRAG:
         
         print("--- RETRIEVER ---")
         query = state["messages"][-1].content
-        retriever = self.retriever_obj.load_retriever()
+        retriever = self.retriever_obj.load_retreiver()
         docs = retriever.invoke(query)
         context = self._format_docs(docs)
         return {"messages": [HumanMessage(content=context)]}

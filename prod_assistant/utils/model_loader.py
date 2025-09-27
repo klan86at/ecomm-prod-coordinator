@@ -12,7 +12,7 @@ import asyncio
 
 
 class ApiKeyManager:
-    REQUIRED_KEYS = ["GROQ_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"]
+    REQUIRED_KEYS = ["GROQ_API_KEY", "GOOGLE_API_KEY"]#, "OPENAI_API_KEY"]
 
     def __init__(self):
         self.api_keys = {}
@@ -127,12 +127,12 @@ class ModelLoader:
                 temperature=temperature,
             )
 
-        elif provider == "openai":
-            return ChatOpenAI(
-                model=model_name,
-                api_key=self.api_key_mgr.get("OPENAI_API_KEY"),
-                temperature=temperature
-            )
+        # elif provider == "openai":
+        #     return ChatOpenAI(
+        #         model=model_name,
+        #         api_key=self.api_key_mgr.get("OPENAI_API_KEY"),
+        #         temperature=temperature
+        #     )
 
         else:
             log.error("Unsupported LLM provider", provider=provider)
