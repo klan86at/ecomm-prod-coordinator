@@ -32,7 +32,7 @@ def format_docs(docs) -> str:
 
 def build_chain(query):
     """Build the RAG pipeline chain with retriever, prompt, LLM, and parser."""
-    retriever = retriever_obj.load_retriever()
+    retriever = retriever_obj.load_retreiver()
     retrieved_docs=retriever.invoke(query)
     
     #retrieved_contexts = [format_docs(doc) for doc in retrieved_docs]

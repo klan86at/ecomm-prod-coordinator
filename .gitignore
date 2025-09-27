@@ -7,6 +7,22 @@ wheels/
 *.egg-info
 archive
 
+# Log files
+*.log
+*.log.*
+log/
+logs/
+*.txt  # if you use .txt for logs (be careful with this)
+debug.log
+error.log
+app.log
+application.log
+
+# Python-specific log patterns
+*.py.log
+*.pyc.log
+
+
 # Virtual environments
 .venv1
 .env
