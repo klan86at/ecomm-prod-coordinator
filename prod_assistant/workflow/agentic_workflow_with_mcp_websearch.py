@@ -113,7 +113,7 @@ class AgenticRAG:
     def _build_workflow(self):
         workflow = StateGraph(self.AgentState)
         workflow.add_node("Assistant", self._ai_assistant)
-        workflow.add_node("Retriever", self._vector_retriever)
+        workflow.add_node("Retreiver", self._vector_retriever)
         workflow.add_node("Generator", self._generate)
         workflow.add_node("Rewriter", self._rewrite)
         workflow.add_node("WebSearch", self._web_search)
@@ -123,16 +123,16 @@ class AgenticRAG:
             "Assistant",
             
             
-            lambda state: "Retriever" if "TOOL" in state["messages"][-1].content else END,
+            lambda state: "Retreiver" if "TOOL" in state["messages"][-1].content else END,
             
             {
-                "Retriever": "Retriever", 
+                "Retreiver": "Retreiver", 
                  END: END
              },
         )
         workflow.add_conditional_edges(
             
-            "Retriever",
+            "Retreiver",
             
             self._grade_documents,
             
@@ -158,5 +158,5 @@ class AgenticRAG:
 
 if __name__ == "__main__":
     rag_agent = AgenticRAG()
-    answer = rag_agent.run("What is the price of iPhone 16?")
+    answer = rag_agent.run("What is the price of iPhone 17?")
     print("\nFinal Answer:\n", answer)
