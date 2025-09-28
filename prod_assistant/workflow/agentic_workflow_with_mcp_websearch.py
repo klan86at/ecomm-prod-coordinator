@@ -123,10 +123,10 @@ class AgenticRAG:
             "Assistant",
             
             
-            lambda state: "Retreiver" if "TOOL" in state["messages"][-1].content else END,
+            lambda state: "tools" if "TOOL" in state["messages"][-1].content else END,
             
             {
-                "Retreiver": "Retreiver", 
+                "tools": "Retreiver", 
                  "end": END
              },
         )
