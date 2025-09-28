@@ -127,7 +127,7 @@ class AgenticRAG:
             
             {
                 "Retreiver": "Retreiver", 
-                 END: END
+                 "end": END
              },
         )
         workflow.add_conditional_edges(
