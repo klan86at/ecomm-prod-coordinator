@@ -7,7 +7,7 @@ mcp = FastMCP("hybrid_search")
 
 # Load retriever once
 retriever_obj = Retreiver()
-retriever = retriever_obj.load_retriever()
+retriever = retriever_obj.load_retreiver()
 
 # LangChain DuckDuckGo tool
 duckduckgo = DuckDuckGoSearchRun()
