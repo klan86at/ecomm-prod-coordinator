@@ -9,9 +9,6 @@ from dotenv import load_dotenv
 import sys
 from pathlib import Path
 
-# Add project root to the python path for direct script execution
-# project_root = Path(__file__).resolve().parent.parent[2]
-# sys.path.insert(0, str(project_root))
 
 class Retreiver:
     def __init__(self):
@@ -54,9 +51,9 @@ class Retreiver:
             )
         if not self.retreiver:
             top_k = self.config["retriever"]["top_k"] if "retriever" in self.config else 3
-            retreiver=self.vector_store.as_retriever(search_kwargs={"k": top_k})
+            self.retreiver=self.vector_store.as_retriever(search_kwargs={"k": top_k})
             print("Retriver loaded Successufully")
-            return retreiver
+        return self.retreiver
         
     def call_retreiver(self, user_query):
         """_summary_
